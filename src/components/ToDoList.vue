@@ -3,7 +3,7 @@
     <Header></Header>
     <div>
       <input type="text" v-on:keyup.enter="submit" v-model.trim="newItem">
-      <!--      <button v-on:click="add">Add</button>-->
+      <button v-on:click="submit">Add</button>
     </div>
     <br>
     <ol>

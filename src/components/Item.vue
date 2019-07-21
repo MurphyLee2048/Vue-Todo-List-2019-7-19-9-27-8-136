@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="Item">
     <li :class="{finished: item.isFinished}">
       <input type="checkbox" v-on:click="change" >
       <span>{{ item.message }}</span>
