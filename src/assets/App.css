@@ -45,3 +45,10 @@ p {
 em {
   font-style: italic;
 }
+.done-todo {
+  margin: 5px 5px 2px 0;
+}
+.finished {
+  color: #999;
+  text-decoration: line-through;
+}

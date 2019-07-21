@@ -2,20 +2,19 @@
   <div id="ToDoList">
     <Header></Header>
     <div>
-      <input type="text" v-on:keyup.enter="submit" v-model="newItem">
-<!--      <button v-on:click="add">Add</button>-->
+      <input type="text" v-on:keyup.enter="submit" v-model.trim="newItem">
+      <!--      <button v-on:click="add">Add</button>-->
     </div>
     <br>
     <ol>
-      <li v-for="item in list">
-        <span>{{ item.message }}</span>
-      </li>
+      <Item :item="item" v-for="(item) in list"></Item>
     </ol>
   </div>
 </template>
 
 <script>
   import Header from "./Header";
+  import Item from "./Item.vue";
   import Button from "./Button.vue";
 
 
@@ -23,19 +22,18 @@
     name: "ToDoList",
     data() {
       return {
-        list: [
-        ],
+        list: [],
         newItem: ""
       }
     },
     methods: {
       submit() {
-        alert(this.newItem);
-        this.list.push({message: this.newItem});
+        this.list.push({message: this.newItem, isFinished: false});
       }
     },
     components: {
       Header,
+      Item,
       Button
     }
   }
