@@ -2,39 +2,72 @@
   <div id="ToDoList">
     <Header></Header>
     <div>
-      <input type="text" v-on:keyup.enter="submit" v-model.trim="newItem">
+      <input class="input-text" type="text" v-on:keyup.enter="submit" v-model.trim="newItem">
       <button v-on:click="submit">Add</button>
     </div>
     <br>
     <ol>
-      <Item :item="item" v-for="(item) in list"></Item>
+      <Item @updateIsFinished="updateIsFinished" :item="item" v-for="(item) in filtersomething(list)"></Item>
     </ol>
+    <todolistButton @clickAll="clickAll"  @clickActive="clickActive" @clickComplete="clickComplete"></todolistButton>
   </div>
+
 </template>
 
 <script>
   import Header from "./Header";
   import Item from "./Item.vue";
-  import Button from "./Button.vue";
+  import todolistButton from "./todolistButton.vue";
 
 
   export default {
     name: "ToDoList",
     data() {
       return {
+        count:0,
         list: [],
-        newItem: ""
+        newItem: "",
+        isActive: false,
+        isComplete: false
       }
     },
     methods: {
       submit() {
-        this.list.push({message: this.newItem, isFinished: false});
+        this.list.push({message: this.newItem, isFinished: false, myindex:this.count++});
+      },
+      filtersomething:function (list) {
+        if (!this.isActive && !this.isComplete) {
+          return list;
+        }
+        if (this.isActive) {
+          return list.filter(v => !v.isFinished);
+        }
+
+        if (this.isComplete) {
+          return list.filter(v => v.isFinished);
+        }
+
+      },
+      updateIsFinished:function (myindex) {
+        this.list[myindex].isFinished = !this.list[myindex].isFinished;
+      },
+      clickAll(){
+        this.isActive = false;
+        this.isComplete = false;
+      },
+      clickActive(){
+        this.isActive = true;
+        this.isComplete = false;
+      },
+      clickComplete(){
+        this.isActive = false;
+        this.isComplete = true;
       }
     },
     components: {
       Header,
       Item,
-      Button
+      todolistButton
     }
   }
 </script>
