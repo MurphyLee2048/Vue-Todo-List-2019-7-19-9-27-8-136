@@ -1,10 +1,8 @@
 <template>
   <div id="ToDoList">
+    <Header></Header>
     <div>
-      <h2>Jquery To Do List</h2>
-      <p><em>Simple Todo List with adding and filter by diff status.</em></p>
-    </div>
-    <div><input type="text" v-model="list">
+      <input type="text" v-on:keyup.enter="submit" v-model="newItem">
       <button v-on:click="add">Add</button>
     </div>
     <br>
@@ -12,10 +10,28 @@
 </template>
 
 <script>
-  import Button from "./Button.vue"
+  import Header from "./Header";
+  import Button from "./Button.vue";
+
+
   export default {
     name: "ToDoList",
+    data() {
+      return {
+        list: [
+          {title: "nnnn"}
+        ],
+        newItem: ""
+      }
+    },
+    methods: {
+      submit() {
+        alert(this.newItem);
+        this.list.push(this.newItem);
+      }
+    },
     components: {
+      Header,
       Button
     }
   }
