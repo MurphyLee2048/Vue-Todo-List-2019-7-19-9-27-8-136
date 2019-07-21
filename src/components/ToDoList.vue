@@ -3,9 +3,14 @@
     <Header></Header>
     <div>
       <input type="text" v-on:keyup.enter="submit" v-model="newItem">
-      <button v-on:click="add">Add</button>
+<!--      <button v-on:click="add">Add</button>-->
     </div>
     <br>
+    <ol>
+      <li v-for="item in list">
+        <span>{{ item.message }}</span>
+      </li>
+    </ol>
   </div>
 </template>
 
@@ -19,7 +24,6 @@
     data() {
       return {
         list: [
-          {title: "nnnn"}
         ],
         newItem: ""
       }
@@ -27,7 +31,7 @@
     methods: {
       submit() {
         alert(this.newItem);
-        this.list.push(this.newItem);
+        this.list.push({message: this.newItem});
       }
     },
     components: {
