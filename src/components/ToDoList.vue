@@ -2,14 +2,14 @@
   <div id="ToDoList">
     <Header></Header>
     <div>
-      <input class="input-text" type="text" v-on:keyup.enter="submit" v-model.trim="newItem">
-      <button v-on:click="submit">Add</button>
+      <input class="input-text" type="text" v-on:keyup.enter="addItem" v-model.trim="newItem">
+      <button v-on:click="addItem">Add</button>
     </div>
     <br>
     <ol>
-      <Item @updateIsFinished="updateIsFinished" :item="item" v-for="(item) in filtersomething(list)"></Item>
+      <Item @updateIsFinished="updateIsFinished" :item="item" v-for="item in filterSomething"></Item>
     </ol>
-    <ToDoListButton @clickAll="clickAll"  @clickActive="clickActive" @clickComplete="clickComplete"></ToDoListButton>
+    <ToDoListButton @clickAll="clickAll" @clickActive="clickActive" @clickComplete="clickComplete"></ToDoListButton>
   </div>
 
 </template>
@@ -24,47 +24,43 @@
     name: "ToDoList",
     data() {
       return {
-        count:0,
-        list: [],
         newItem: "",
-        isActive: false,
-        isComplete: false
+      }
+    },
+    computed: {
+      list() {
+        return this.$store.state.list;
+      },
+      filterSomething() {
+        if (!this.$store.state.isActive && !this.$store.state.isComplete) {
+          return this.$store.getters.filterAll;
+        }
+        if (this.$store.state.isActive) {
+          return this.$store.getters.filterIsActive;
+        }
+        if (this.$store.state.isComplete) {
+          return this.$store.getters.filterIsComplete;
+        }
       }
     },
     methods: {
-      submit() {
-        if (this.newItem !== '') {
-          this.list.push({message: this.newItem, isFinished: false, myIndex:this.count++});
-        }
-      },
-      filtersomething:function (list) {
-        if (!this.isActive && !this.isComplete) {
-          return list;
-        }
-        if (this.isActive) {
-          return list.filter(v => !v.isFinished);
-        }
-
-        if (this.isComplete) {
-          return list.filter(v => v.isFinished);
-        }
-
-      },
-      updateIsFinished:function (myIndex) {
+      updateIsFinished: function (myIndex) {
         this.list[myIndex].isFinished = !this.list[myIndex].isFinished;
       },
-      clickAll(){
-        this.isActive = false;
-        this.isComplete = false;
+      clickAll() {
+        this.$store.commit('all');
       },
-      clickActive(){
-        this.isActive = true;
-        this.isComplete = false;
+      clickActive() {
+        this.$store.commit('activate');
       },
-      clickComplete(){
-        this.isActive = false;
-        this.isComplete = true;
-      }
+      clickComplete() {
+        this.$store.commit('complete');
+      },
+      addItem() {
+        if (this.newItem !== '') {
+          this.$store.commit('addItem', this.newItem);
+        }
+      },
     },
     components: {
       Header,

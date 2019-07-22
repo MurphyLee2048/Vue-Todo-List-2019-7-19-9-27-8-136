@@ -13,14 +13,12 @@
       clickAll() {
         this.$emit("clickAll")
       },
-      clickActive(){
+      clickActive() {
         this.$emit("clickActive")
       },
-      clickComplete(){
+      clickComplete() {
         this.$emit("clickComplete")
       }
-
-
     }
   }
 </script>
