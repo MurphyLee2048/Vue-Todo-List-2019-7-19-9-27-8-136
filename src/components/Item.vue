@@ -8,16 +8,16 @@
 <script>
   export default {
     name: "Item",
-    data(){
-      return{
-        isFinished : false
-      }
-    },
+    // data(){
+    //   return{
+    //     isFinished : false
+    //   }
+    // },
     props: ['item'],
     methods: {
       change:function () {
         this.isFinished = !this.isFinished;
-        this.$emit("updateIsFinished",this.item.myindex);
+        this.$emit("updateIsFinished", this.item.myIndex);
       }
     }
   }
