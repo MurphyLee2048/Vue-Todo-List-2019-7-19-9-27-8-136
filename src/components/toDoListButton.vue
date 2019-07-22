@@ -8,7 +8,7 @@
 
 <script>
   export default {
-    name: "todolistButton",
+    name: "toDoListButton",
     methods: {
       clickAll() {
         this.$emit("clickAll")

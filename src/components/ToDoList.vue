@@ -9,7 +9,7 @@
     <ol>
       <Item @updateIsFinished="updateIsFinished" :item="item" v-for="(item) in filtersomething(list)"></Item>
     </ol>
-    <todolistButton @clickAll="clickAll"  @clickActive="clickActive" @clickComplete="clickComplete"></todolistButton>
+    <toDoListButton @clickAll="clickAll"  @clickActive="clickActive" @clickComplete="clickComplete"></toDoListButton>
   </div>
 
 </template>
@@ -17,7 +17,7 @@
 <script>
   import Header from "./Header";
   import Item from "./Item.vue";
-  import todolistButton from "./todolistButton.vue";
+  import toDoListButton from "./toDoListButton.vue";
 
 
   export default {
@@ -33,7 +33,9 @@
     },
     methods: {
       submit() {
-        this.list.push({message: this.newItem, isFinished: false, myindex:this.count++});
+        if (this.newItem !== '') {
+          this.list.push({message: this.newItem, isFinished: false, myindex:this.count++});
+        }
       },
       filtersomething:function (list) {
         if (!this.isActive && !this.isComplete) {
@@ -67,7 +69,7 @@
     components: {
       Header,
       Item,
-      todolistButton
+      toDoListButton
     }
   }
 </script>
